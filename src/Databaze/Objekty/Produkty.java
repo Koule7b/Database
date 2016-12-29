@@ -1,3 +1,5 @@
+package Databaze.Objekty;
+
 import java.util.ArrayList;
 
 /**
@@ -30,5 +32,17 @@ public class Produkty {
 
     public ArrayList<Character> getPopis() {
         return popis;
+    }
+
+    public void setCena(int cena) {
+        this.cena = cena;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public void setPopis(ArrayList<Character> popis) {
+        this.popis = popis;
     }
 }

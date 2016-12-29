@@ -1,3 +1,5 @@
+package Databaze.Objekty;
+
 import java.util.ArrayList;
 
 /**
@@ -36,5 +38,17 @@ public class Zakaznik {
 
     public ArrayList<Character> getAdresa() {
         return adresa;
+    }
+
+    public void setJmeno(ArrayList<Character> jmeno) {
+        this.jmeno = jmeno;
+    }
+
+    public void setPrijmeni(ArrayList<Character> prijmeni) {
+        this.prijmeni = prijmeni;
+    }
+
+    public void setAdresa(ArrayList<Character> adresa) {
+        this.adresa = adresa;
     }
 }

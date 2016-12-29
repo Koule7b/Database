@@ -1,3 +1,5 @@
+package Databaze.Objekty;
+
 import java.util.ArrayList;
 
 /**
