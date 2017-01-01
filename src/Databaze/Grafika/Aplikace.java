@@ -67,17 +67,72 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
     public void zobrazData(){
 
     }
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String zmacknuteTlacitko = e.getActionCommand();
         switch (zmacknuteTlacitko){
             case novy:
+                engine.vytvorZakaznika();
+                break;
         }
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-
+        switch (e.getItem().toString()){
+            case mer:
+                engine.vypisMereni();
+                zakaznik.setState(false);
+                odberneMisto.setState(false);
+                platba.setState(false);
+                produkty.setState(false);
+                smlouva.setState(false);
+                break;
+            case odM:
+                engine.vypisOdberneMista();
+                mereni.setState(false);
+                zakaznik.setState(false);
+                platba.setState(false);
+                produkty.setState(false);
+                smlouva.setState(false);
+                break;
+            case pla:
+                engine.vypisPlatby();
+                mereni.setState(false);
+                odberneMisto.setState(false);
+                zakaznik.setState(false);
+                produkty.setState(false);
+                smlouva.setState(false);
+                break;
+            case pro:
+                System.out.println(e.getItem().toString());
+                engine.vypisProdukty();
+                mereni.setState(false);
+                odberneMisto.setState(false);
+                platba.setState(false);
+                zakaznik.setState(false);
+                smlouva.setState(false);
+                break;
+            case sml:
+                engine.vypisSmlouvy();
+                mereni.setState(false);
+                odberneMisto.setState(false);
+                platba.setState(false);
+                produkty.setState(false);
+                zakaznik.setState(false);
+                break;
+            case zak:
+                engine.vypisZakazniky(getComponentGraphics(getGraphics()));
+                mereni.setState(false);
+                odberneMisto.setState(false);
+                platba.setState(false);
+                produkty.setState(false);
+                smlouva.setState(false);
+                break;
+        }
     }
 }
