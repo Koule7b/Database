@@ -8,34 +8,36 @@ import java.awt.*;
 /**
  * Created by stepanmudra on 01.01.17.
  */
-public class OknoTabulky extends JScrollPane{
+public class OknoTabulky implements Scrollable {
     Engine engine;
     int vykresleni;
     public OknoTabulky(Engine engine, int vykresleni){
         this.engine = engine;
         this.vykresleni = vykresleni;
     }
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        switch (vykresleni){
-            case 1:
-                engine.vypisZakazniky(g);
-                break;
-            case 2:
-                engine.vypisZakazniky(g);
-                break;
-            case 3:
-                engine.vypisZakazniky(g);
-                break;
-            case 4:
-                engine.vypisZakazniky(g);
-                break;
-            case 5:
-                engine.vypisZakazniky(g);
-                break;
-            case 6:
-                engine.vypisZakazniky(g);
-                break;
-        }
+
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return null;
+    }
+
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return 0;
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return 0;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return false;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+        return false;
     }
 }

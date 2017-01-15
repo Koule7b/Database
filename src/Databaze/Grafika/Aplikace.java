@@ -1,6 +1,11 @@
 package Databaze.Grafika;
 
+import Databaze.*;
 import Databaze.Logika.Engine;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.metadata.ClassMetadata;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
 
 /**
  * Created by stepanmudra on 29.12.16.
@@ -34,8 +40,15 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
     private Checkbox smlouva = new Checkbox(sml);
     private Checkbox zakaznik = new Checkbox(zak);
     private Engine engine;
+    //Tutorial z knihy
+    JTable jTable;
+    Session session;
+    SessionFactory sessionFactory;
+    ClassMetadata classMetadata;
+    JScrollPane jScrollPane;
+    //JToggleButton
 
-    public Aplikace(Okno okno){
+    public Aplikace(Okno okno) {
         setLayout(new BorderLayout());
         JPanel vyber = new JPanel();
         vyber.setLayout(new BoxLayout(vyber, BoxLayout.Y_AXIS));
@@ -59,9 +72,14 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
         tlacitka.add(pridat);
         tlacitka.add(smazat);
         tlacitka.add(zmenit);
-        engine = new Engine();
         add(vyber, BorderLayout.WEST);
         add(tlacitka, BorderLayout.NORTH);
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+        session = sessionFactory.openSession();
+        engine = new Engine(session);
+        jTable = new JTable();
+        jScrollPane = new JScrollPane();
+        this.add(jScrollPane);
         this.okno = okno;
     }
     public void zobrazData(){
@@ -85,53 +103,90 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
     public void itemStateChanged(ItemEvent e) {
         switch (e.getItem().toString()){
             case mer:
-                engine.vypisMereni();
                 zakaznik.setState(false);
                 odberneMisto.setState(false);
                 platba.setState(false);
                 produkty.setState(false);
                 smlouva.setState(false);
+                this.remove(jScrollPane);
+                classMetadata = sessionFactory.getClassMetadata(MereniEntity.class);
+                String[] jmenaM = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2]};
+                jTable = new JTable(engine.vypisMereni(), jmenaM);
+                this.add(jScrollPane = new JScrollPane(jTable));
+                this.repaint();
+                okno.setVisible(true);
                 break;
             case odM:
-                engine.vypisOdberneMista();
                 mereni.setState(false);
                 zakaznik.setState(false);
                 platba.setState(false);
                 produkty.setState(false);
                 smlouva.setState(false);
+                this.remove(jScrollPane);
+                classMetadata = sessionFactory.getClassMetadata(OdberneMistoEntity.class);
+                String[] jmenaO = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0]};
+                jTable = new JTable(engine.vypisMistaOdberu(), jmenaO);
+                this.add(jScrollPane = new JScrollPane(jTable));
+                this.repaint();
+                okno.setVisible(true);
                 break;
             case pla:
-                engine.vypisPlatby();
                 mereni.setState(false);
                 odberneMisto.setState(false);
                 zakaznik.setState(false);
                 produkty.setState(false);
                 smlouva.setState(false);
+                this.remove(jScrollPane);
+                classMetadata = sessionFactory.getClassMetadata(PlatbaEntity.class);
+                String[] jmenaPla = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2]};
+                jTable = new JTable(engine.vypisPlatby(), jmenaPla);
+                this.add(jScrollPane = new JScrollPane(jTable));
+                this.repaint();
+                okno.setVisible(true);
                 break;
             case pro:
-                System.out.println(e.getItem().toString());
-                engine.vypisProdukty();
                 mereni.setState(false);
                 odberneMisto.setState(false);
                 platba.setState(false);
                 zakaznik.setState(false);
                 smlouva.setState(false);
+                this.remove(jScrollPane);
+                classMetadata = sessionFactory.getClassMetadata(ProduktyEntity.class);
+                String[] jmenaPro = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1]};
+                jTable = new JTable(engine.vypisProdukty(), jmenaPro);
+                this.add(jScrollPane = new JScrollPane(jTable));
+                this.repaint();
+                okno.setVisible(true);
                 break;
             case sml:
-                engine.vypisSmlouvy();
                 mereni.setState(false);
                 odberneMisto.setState(false);
                 platba.setState(false);
                 produkty.setState(false);
                 zakaznik.setState(false);
+                this.remove(jScrollPane);
+                classMetadata = sessionFactory.getClassMetadata(SmlouvaEntity.class);
+                System.out.println(Arrays.toString(classMetadata.getPropertyNames()));
+                classMetadata.getIdentifierPropertyName();
+                String[] jmenaS = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2], classMetadata.getPropertyNames()[3], classMetadata.getPropertyNames()[4]};
+                jTable = new JTable(engine.vypisSmlouvy(), jmenaS);
+                this.add(jScrollPane = new JScrollPane(jTable));
+                this.repaint();
+                okno.setVisible(true);
                 break;
             case zak:
-                engine.vypisZakazniky(getComponentGraphics(getGraphics()));
                 mereni.setState(false);
                 odberneMisto.setState(false);
                 platba.setState(false);
                 produkty.setState(false);
                 smlouva.setState(false);
+                this.remove(jScrollPane);
+                classMetadata = sessionFactory.getClassMetadata(ZakaznikEntity.class);
+                String[] jmenaZ = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2]};
+                jTable = new JTable(engine.vypisZakazniky(), jmenaZ);
+                this.add(jScrollPane = new JScrollPane(jTable));
+                this.repaint();
+                okno.setVisible(true);
                 break;
         }
     }

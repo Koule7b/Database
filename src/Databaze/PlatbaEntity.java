@@ -3,7 +3,7 @@ package Databaze;
 import javax.persistence.*;
 
 /**
- * Created by stepanmudra on 01.01.17.
+ * Created by stepanmudra on 15.01.17.
  */
 @Entity
 @Table(name = "Platba", schema = "", catalog = "")
@@ -11,6 +11,7 @@ public class PlatbaEntity {
     private int id;
     private String datum;
     private int castka;
+    private int idSmlovy;
 
     @Id
     @Column(name = "id")
@@ -42,6 +43,16 @@ public class PlatbaEntity {
         this.castka = castka;
     }
 
+    @Basic
+    @Column(name = "idSmlovy")
+    public int getIdSmlovy() {
+        return idSmlovy;
+    }
+
+    public void setIdSmlovy(int idSmlovy) {
+        this.idSmlovy = idSmlovy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,6 +62,7 @@ public class PlatbaEntity {
 
         if (id != that.id) return false;
         if (castka != that.castka) return false;
+        if (idSmlovy != that.idSmlovy) return false;
         if (datum != null ? !datum.equals(that.datum) : that.datum != null) return false;
 
         return true;
@@ -61,6 +73,7 @@ public class PlatbaEntity {
         int result = id;
         result = 31 * result + (datum != null ? datum.hashCode() : 0);
         result = 31 * result + castka;
+        result = 31 * result + idSmlovy;
         return result;
     }
 }

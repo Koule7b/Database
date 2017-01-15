@@ -3,7 +3,7 @@ package Databaze;
 import javax.persistence.*;
 
 /**
- * Created by stepanmudra on 01.01.17.
+ * Created by stepanmudra on 15.01.17.
  */
 @Entity
 @Table(name = "Produkty", schema = "", catalog = "")
