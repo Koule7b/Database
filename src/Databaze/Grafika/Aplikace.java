@@ -92,8 +92,25 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
         switch (zmacknuteTlacitko){
             case novy:
                 this.requestFocus(false);
-                OknoNovaPlatba oknoNovaPlatba = new OknoNovaPlatba(engine);
-                oknoNovaPlatba.vypln();
+                if(mereni.getState()){
+                    OknoNoveMereni oknoNoveMereni = new OknoNoveMereni(engine);
+                    oknoNoveMereni.vypln();
+                }else if(odberneMisto.getState()) {
+                    OknoNoveOdberneMisto oknoNoveOdberneMisto = new OknoNoveOdberneMisto(engine);
+                    oknoNoveOdberneMisto.vypln();
+                }else if(platba.getState()) {
+                    OknoNovaPlatba oknoNovaPlatba = new OknoNovaPlatba(engine);
+                    oknoNovaPlatba.vypln();
+                }else if(produkty.getState()) {
+                    OknoNovyProdukt oknoNovyProdukt = new OknoNovyProdukt(engine);
+                    oknoNovyProdukt.vypln();
+                }else if(smlouva.getState()){
+                    OknoNovaSmlouva oknoNovaSmlouva = new OknoNovaSmlouva(engine);
+                    oknoNovaSmlouva.vypln();
+                }else if(zakaznik.getState()){
+                    OknoNovyZakaznik oknoNovyZakaznik = new OknoNovyZakaznik(engine);
+                    oknoNovyZakaznik.vypln();
+                }
                 break;
         }
     }

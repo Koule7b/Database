@@ -20,8 +20,8 @@ public class OknoNovaPlatba extends JFrame{
         this.engine = engine;
     }
     public void vypln(){
-        VnitrekNP vnitrekNP = new VnitrekNP(this, engine);
-        vnitrekNP.vyplnOnkoP();
+        VnitrekNP vnitrekNPro = new VnitrekNP(this, engine);
+        vnitrekNPro.vyplnOnkoP();
         this.setVisible(true);
         this.pack();
     }
@@ -53,7 +53,7 @@ class VnitrekNP extends JPanel implements ActionListener{
         zavrit = new JButton(zav);
         zavrit.addActionListener(this);
         id = new JLabel("id");
-        datum = new JLabel("datum");
+        datum = new JLabel("adresa");
         castka = new JLabel("částka");
         idSmlouvy = new JLabel("id smlouvy");
         idP = new JTextField();
