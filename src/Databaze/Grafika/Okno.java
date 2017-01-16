@@ -21,7 +21,7 @@ public class Okno extends JFrame {
     public void otevriAplikaci(){
         aplikace = new Aplikace(this);
         this.add(aplikace);
-        pack();
+        this.pack();
         this.setVisible(true);
     }
 }

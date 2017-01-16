@@ -82,9 +82,6 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
         this.add(jScrollPane);
         this.okno = okno;
     }
-    public void zobrazData(){
-
-    }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
     }
@@ -94,7 +91,9 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
         String zmacknuteTlacitko = e.getActionCommand();
         switch (zmacknuteTlacitko){
             case novy:
-                engine.vytvorZakaznika();
+                this.requestFocus(false);
+                OknoNovaPlatba oknoNovaPlatba = new OknoNovaPlatba(engine);
+                oknoNovaPlatba.vypln();
                 break;
         }
     }
