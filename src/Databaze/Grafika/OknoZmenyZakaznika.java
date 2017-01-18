@@ -10,27 +10,27 @@ import java.awt.event.ActionListener;
 /**
  * Created by stepanmudra on 15.01.17.
  */
-public class OknoNovyZakaznik extends JFrame {
+public class OknoZmenyZakaznika extends JFrame {
     Engine engine;
-    public OknoNovyZakaznik(Engine engine) {
-        setTitle("Nové měření");
+    public OknoZmenyZakaznika(Engine engine) {
+        setTitle("Změna zákazníka");
         setDefaultCloseOperation(OknoNovaPlatba.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(300, 200));
         setResizable(true);
         this.engine = engine;
     }
     public void vypln(){
-        VnitrekNZ vnitrekNZ = new VnitrekNZ(this, engine);
+        VnitrekZZ vnitrekNZ = new VnitrekZZ(this, engine);
         vnitrekNZ.vyplnOknoNZ();
         this.setVisible(true);
         this.pack();
     }
-}class VnitrekNZ extends JPanel implements ActionListener {
-    OknoNovyZakaznik oknoNovyZakaznik;
+}class VnitrekZZ extends JPanel implements ActionListener {
+    OknoZmenyZakaznika oknoNovyZakaznik;
     Engine engine;
     JPanel levo;
     JPanel pravo;
-    JLabel id;
+    JComboBox id;
     JLabel jmeno;
     JLabel prijmeni;
     JLabel adresa;
@@ -40,9 +40,10 @@ public class OknoNovyZakaznik extends JFrame {
     JTextField adresaT;
     JButton ulozit;
     JButton zavrit;
+    Object[][] zak;
     final String  ulo = "uložit";
     final String zav = "zavřít";
-    public VnitrekNZ(OknoNovyZakaznik oknoNovyZakaznik, Engine engine){
+    public VnitrekZZ(OknoZmenyZakaznika oknoNovyZakaznik, Engine engine){
         this.oknoNovyZakaznik= oknoNovyZakaznik;
         this.engine = engine;
     }
@@ -52,20 +53,23 @@ public class OknoNovyZakaznik extends JFrame {
         levo.setLayout(new BoxLayout(levo, BoxLayout.PAGE_AXIS));
         pravo = new JPanel();
         pravo.setLayout(new BoxLayout(pravo, BoxLayout.PAGE_AXIS));
-        id = new JLabel("id");
+        id = new JComboBox();
         jmeno = new JLabel("jméno");
         prijmeni = new JLabel("přijmení");
         adresa = new JLabel("adresa");
-        idT = new JTextField();
         jmenoT = new JTextField();
         prijmeniT = new JTextField();
         adresaT = new JTextField();
+        zak = engine.vypisZakazniky();
+        for (int i = 0; i < zak.length; i++) {
+            id.addItem(zak[i][0]);
+        }
+        id.addActionListener(this);
         ulozit = new JButton(ulo);
         zavrit = new JButton(zav);
         ulozit.addActionListener(this);
         zavrit.addActionListener(this);
         levo.add(id);
-        levo.add(idT);
         levo.add(jmeno);
         levo.add(jmenoT);
         levo.add(ulozit);
@@ -83,12 +87,15 @@ public class OknoNovyZakaznik extends JFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case ulo:
-                engine.vytvorZakaznika(Integer.parseInt(idT.getText()), jmenoT.getText(), prijmeniT.getText(), adresaT.getText());
+                engine.zmenZakaznika(id.getSelectedIndex() + 1, jmenoT.getText(), prijmeniT.getText(), adresaT.getText());
                 oknoNovyZakaznik.dispose();
                 break;
             case zav:
                 oknoNovyZakaznik.dispose();
                 break;
         }
+        jmenoT.setText(zak[id.getSelectedIndex()][2].toString());
+        prijmeniT.setText(zak[id.getSelectedIndex()][3].toString());
+        adresaT.setText(zak[id.getSelectedIndex()][1].toString());
     }
 }

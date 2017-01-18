@@ -22,7 +22,6 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
 
     private JFrame okno;
     private final String novy = "nový";
-    private final String s = "smazat";
     private final String zmeni = "změnit";
     private final String mer = "měření";
     private final String odM = "odběrné místo";
@@ -31,7 +30,6 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
     private final String sml = "smlouva";
     private final String zak = "zákazník";
     private JButton pridat = new JButton(novy);
-    private JButton smazat = new JButton(s);
     private JButton zmenit = new JButton(zmeni);
     private Checkbox mereni = new Checkbox(mer);
     private Checkbox odberneMisto = new Checkbox(odM);
@@ -67,16 +65,14 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
         JPanel tlacitka = new JPanel();
         tlacitka.setLayout(new FlowLayout());
         pridat.addActionListener(this);
-        smazat.addActionListener(this);
         zmenit.addActionListener(this);
         tlacitka.add(pridat);
-        tlacitka.add(smazat);
         tlacitka.add(zmenit);
         add(vyber, BorderLayout.WEST);
         add(tlacitka, BorderLayout.NORTH);
         sessionFactory = new Configuration().configure().buildSessionFactory();
         session = sessionFactory.openSession();
-        engine = new Engine(session);
+        engine = new Engine();
         jTable = new JTable();
         jScrollPane = new JScrollPane();
         this.add(jScrollPane);
@@ -112,6 +108,14 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
                     oknoNovyZakaznik.vypln();
                 }
                 break;
+            case zmeni:
+                if(zakaznik.getState()){
+                    OknoZmenyZakaznika oknoZmenyZakaznika = new OknoZmenyZakaznika(engine);
+                    oknoZmenyZakaznika.vypln();
+                }else {
+                    OknoChybaZmeny oknoChybaZmeny = new OknoChybaZmeny();
+                    oknoChybaZmeny.vypisChybu();
+                }
         }
     }
 

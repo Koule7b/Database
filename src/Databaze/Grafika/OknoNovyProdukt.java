@@ -80,6 +80,7 @@ public class OknoNovyProdukt extends JFrame{
         switch (e.getActionCommand()) {
             case ulo:
                 engine.vytvorProdukt(Integer.parseInt(idT.getText()), Integer.parseInt(cenaT.getText()), popisT.getText());
+                oknoNovyProdukt.dispose();
                 break;
             case zav:
                 oknoNovyProdukt.dispose();

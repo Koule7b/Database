@@ -40,9 +40,9 @@ class VnitrekNS extends JPanel implements ActionListener{
     JTextField idT;
     JTextField datumPT;
     JTextField datumUT;
-    JTextField idZT;
-    JTextField idPT;
-    JTextField idMOT;
+    JComboBox idZT;
+    JComboBox idPT;
+    JComboBox idMOT;
     JButton ulozit;
     JButton zavrit;
     final String ulo = "uložit";
@@ -58,17 +58,29 @@ class VnitrekNS extends JPanel implements ActionListener{
         zavrit = new JButton(zav);
         zavrit.addActionListener(this);
         id = new JLabel("id");
-        datumP = new JLabel("adresa uzavření smlouvy");
-        datumU = new JLabel("adresa vypršení smlouvy");
+        datumP = new JLabel("datum uzavření smlouvy");
+        datumU = new JLabel("datum vypršení smlouvy");
         idZ = new JLabel("id zákazníka");
         idP = new JLabel("id produktu");
         idMO = new JLabel("id místa odběru");
         idT = new JTextField();
         datumPT = new JTextField();
         datumUT = new JTextField();
-        idZT = new JTextField();
-        idPT = new JTextField();
-        idMOT = new JTextField();
+        idZT = new JComboBox();
+        Object[][] zak = engine.vypisZakazniky();
+        for (int i = 0; i < zak.length; i++) {
+            idZT.addItem(zak[i][0]);
+        }
+        idPT = new JComboBox();
+        Object[][] pro = engine.vypisProdukty();
+        for (int i = 0; i < pro.length; i++) {
+            idPT.addItem(pro[i][0]);
+        }
+        idMOT = new JComboBox();
+        Object[][] misOd = engine.vypisMistaOdberu();
+        for (int i = 0; i < misOd.length; i++) {
+            idMOT.addItem(misOd[i][0]);
+        }
         levo = new JPanel();
         levo.setLayout(new BoxLayout(levo, BoxLayout.PAGE_AXIS));
         levo.add(id);
@@ -95,7 +107,7 @@ class VnitrekNS extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case ulo:
-                engine.vytvorSmlouvu(Integer.parseInt(idT.getText()), datumPT.getText(), datumUT.getText(), Integer.parseInt(idZT.getText()), Integer.parseInt(idPT.getText()), Integer.parseInt(idMOT.getText()));
+                engine.vytvorSmlouvu(Integer.parseInt(idT.getText()), datumPT.getText(), datumUT.getText(), idZT.getSelectedIndex() + 1, idPT.getSelectedIndex() + 1, idMOT.getSelectedIndex() + 1);
                 oknoNovaSmlouva.dispose();
                 break;
             case zav:

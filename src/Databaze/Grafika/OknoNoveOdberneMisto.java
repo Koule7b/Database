@@ -74,6 +74,7 @@ public class OknoNoveOdberneMisto extends JFrame {
         switch (e.getActionCommand()) {
             case ulo:
                 engine.vytvorMistoOdberu(Integer.parseInt(idT.getText()), adresaT.getText());
+                oknoNoveOdberneMisto.dispose();
                 break;
             case zav:
                 oknoNoveOdberneMisto.dispose();

@@ -37,7 +37,7 @@ public class OknoNoveMereni extends JFrame{
     JTextField idT;
     JTextField datumT;
     JTextField hodnotaT;
-    JTextField mistoOdberuT;
+    JComboBox mistoOdberuT;
     JButton ulozit;
     JButton zavrit;
     final String  ulo = "uložit";
@@ -59,7 +59,10 @@ public class OknoNoveMereni extends JFrame{
         idT = new JTextField();
         datumT = new JTextField();
         hodnotaT = new JTextField();
-        mistoOdberuT = new JTextField();
+        mistoOdberuT = new JComboBox();
+        for (int i = 0; i < engine.vypisMistaOdberu().length; i++) {
+            mistoOdberuT.addItem(engine.vypisMistaOdberu()[i][0]);
+        }
         ulozit = new JButton(ulo);
         zavrit = new JButton(zav);
         ulozit.addActionListener(this);
@@ -83,7 +86,8 @@ public class OknoNoveMereni extends JFrame{
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case ulo:
-                engine.vytvorMereni(Integer.parseInt(idT.getText()), datumT.getText(), Integer.parseInt(hodnotaT.getText()), Integer.parseInt(mistoOdberuT.getText()));
+                engine.vytvorMereni(Integer.parseInt(idT.getText()), datumT.getText(), Integer.parseInt(hodnotaT.getText()), mistoOdberuT.getSelectedIndex() + 1);
+                oknoNoveMereni.dispose();
                 break;
             case zav:
                 oknoNoveMereni.dispose();

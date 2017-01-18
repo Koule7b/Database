@@ -38,7 +38,7 @@ class VnitrekNP extends JPanel implements ActionListener{
     JTextField idP;
     JTextField dat;
     JTextField cas;
-    JTextField idS;
+    JComboBox idS;
     JButton ulozit;
     JButton zavrit;
     String ulo = "uložit";
@@ -59,7 +59,10 @@ class VnitrekNP extends JPanel implements ActionListener{
         idP = new JTextField();
         dat = new JTextField();
         cas = new JTextField();
-        idS = new JTextField();
+        idS = new JComboBox();
+        for (int i = 0; i < engine.vypisSmlouvy().length; i++) {
+            idS.addItem(engine.vypisSmlouvy()[i][0]);
+        }
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         popisky = new JPanel();
         popisky.setLayout(new BoxLayout(popisky, BoxLayout.PAGE_AXIS));
@@ -86,7 +89,7 @@ class VnitrekNP extends JPanel implements ActionListener{
         String zmacknuto = e.getActionCommand();
         switch (zmacknuto){
             case "uložit":
-                engine.vytvorPlatbu(Integer.parseInt(idP.getText()), dat.getText(),Integer.parseInt(cas.getText()), Integer.parseInt(idS.getText()));
+                engine.vytvorPlatbu(Integer.parseInt(idP.getText()), dat.getText(),Integer.parseInt(cas.getText()), idS.getSelectedIndex() + 1);
                 oknoNovaPlatba.dispose();
                 break;
             case "zavřít":
