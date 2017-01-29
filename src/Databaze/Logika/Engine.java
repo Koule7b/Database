@@ -1,7 +1,7 @@
 package Databaze.Logika;
 
+import Databaze.Entity.*;
 import Databaze.Grafika.OknoChyby;
-import Databaze.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class Engine {
 
-    Session session;
     SessionFactory sessionFactory;
     public Engine(){
         sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -22,7 +21,7 @@ public class Engine {
     public void zmenZakaznika(int id, String jmeno, String prijmeni, String adresa){
             for (int i = 0; i < vypisZakazniky().length; i++) {
                 if (vypisZakazniky()[i][0].equals(id)) {
-                    session = sessionFactory.openSession();
+                    Session session = sessionFactory.openSession();
                     session.remove(session.createCriteria(ZakaznikEntity.class).list().get(i));
                     session.beginTransaction();
                     session.getTransaction().commit();
@@ -46,7 +45,7 @@ public class Engine {
         zakaznikEntity.setJmeno(jmeno);
         zakaznikEntity.setPrijmeni(prijmeni);
         zakaznikEntity.setAdresa(adresa);
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<ZakaznikEntity> ze = session.createCriteria(ZakaznikEntity.class).list();
         for (int i = 0; i < ze.size(); i++) {
             if(id == ze.get(i).getId()){
@@ -67,7 +66,7 @@ public class Engine {
         OdberneMistoEntity odberneMistoEntity = new OdberneMistoEntity();
         odberneMistoEntity.setEan(id);
         odberneMistoEntity.setAdresa(adresa);
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<OdberneMistoEntity> ze = session.createCriteria(OdberneMistoEntity.class).list();
         for (int i = 0; i < ze.size(); i++) {
             if(id == ze.get(i).getEan()){
@@ -81,13 +80,13 @@ public class Engine {
         session.getTransaction().commit();
         session.close();
     }
-    public void vytvorPlatbu(int id, String datum, int castka, int idSmlouvy){
+    public void vytvorPlatbu(int id, String datum, int castka, SmlouvaEntity smlouva){
         PlatbaEntity platbaEntity = new PlatbaEntity();
         platbaEntity.setId(id);
         platbaEntity.setDatum(datum);
         platbaEntity.setCastka(castka);
-        platbaEntity.setIdSmlovy(idSmlouvy);
-        session = sessionFactory.openSession();
+        platbaEntity.setSmlouvaByIdSmlovy(smlouva);
+        Session session = sessionFactory.openSession();
         List<PlatbaEntity> ze = session.createCriteria(PlatbaEntity.class).list();
         for (int i = 0; i < ze.size(); i++) {
             if(id == ze.get(i).getId()){
@@ -106,7 +105,7 @@ public class Engine {
         produktyEntity.setId(id);
         produktyEntity.setCena(cena);
         produktyEntity.setPopis(popis);
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<ProduktyEntity> ze = session.createCriteria(ProduktyEntity.class).list();
         for (int i = 0; i < ze.size(); i++) {
             if(id == ze.get(i).getId()){
@@ -126,7 +125,7 @@ public class Engine {
         mereniEntity.setDatum(datum);
         mereniEntity.setHodnota(hodnota);
         mereniEntity.setMistoOdberu(idMista);
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<MereniEntity> ze = session.createCriteria(MereniEntity.class).list();
         for (int i = 0; i < ze.size(); i++) {
             if(id == ze.get(i).getId()){
@@ -145,10 +144,10 @@ public class Engine {
         smlouvaEntity.setId(id);
         smlouvaEntity.setDatumPocatku(datumP);
         smlouvaEntity.setDatumVyprseni(datumV);
-        smlouvaEntity.setIdZakaznika(idZ);
-        smlouvaEntity.setIdProduktu(idP);
-        smlouvaEntity.setIdMistaOdberu(idMO);
-        session = sessionFactory.openSession();
+        //smlouvaEntity.setIdZakaznika(idZ);
+        //smlouvaEntity.setIdProduktu(idP);
+        //smlouvaEntity.setIdMistaOdberu(idMO);
+        Session session = sessionFactory.openSession();
         List<SmlouvaEntity> ze = session.createCriteria(SmlouvaEntity.class).list();
         for (int i = 0; i < ze.size(); i++) {
             if(id == ze.get(i).getId()){
@@ -162,19 +161,15 @@ public class Engine {
         session.getTransaction().commit();
         session.close();
     }
-    public Object[][] vypisMereni(){
-        session = sessionFactory.openSession();
+    public List<MereniEntity> vypisMereni(){
         List<MereniEntity> mereniEntities;
+        Session session = sessionFactory.openSession();
         mereniEntities = session.createCriteria(MereniEntity.class).list();
-        Object[][] arr = new Object[mereniEntities.size()][];
-        for (int i = 0; i < mereniEntities.size(); i++) {
-            arr[i] = new Object[]{mereniEntities.get(i).getId(), mereniEntities.get(i).getDatum(), mereniEntities.get(i).getHodnota(), mereniEntities.get(i).getMistoOdberu()};
-        }
         session.close();
-        return arr;
+        return mereniEntities;
     }
     public Object[][] vypisMistaOdberu(){
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<OdberneMistoEntity> odberneMistoEntities;
         odberneMistoEntities = session.createCriteria(OdberneMistoEntity.class).list();
         Object[][] arr = new Object[odberneMistoEntities.size()][];
@@ -185,18 +180,18 @@ public class Engine {
         return arr;
     }
     public Object[][] vypisPlatby(){
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<PlatbaEntity> platbaEntities;
         platbaEntities = session.createCriteria(PlatbaEntity.class).list();
         Object[][] arr = new Object[platbaEntities.size()][];
         for (int i = 0; i < platbaEntities.size(); i++) {
-            arr[i] = new Object[]{platbaEntities.get(i).getId(), platbaEntities.get(i).getCastka(), platbaEntities.get(i).getDatum(), platbaEntities.get(i).getIdSmlovy()};
+            //arr[i] = new Object[]{platbaEntities.get(i).getId(), platbaEntities.get(i).getCastka(), platbaEntities.get(i).getDatum(), platbaEntities.get(i).getIdSmlovy()};
         }
         session.close();
         return arr;
     }
     public Object[][] vypisProdukty(){
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<ProduktyEntity> produktyEntities;
         produktyEntities = session.createCriteria(ProduktyEntity.class).list();
         Object[][] arr = new Object[produktyEntities.size()][];
@@ -206,19 +201,14 @@ public class Engine {
         session.close();
         return arr;
     }
-    public Object[][] vypisSmlouvy(){
-        session = sessionFactory.openSession();
-        List<SmlouvaEntity> smlouvaEntities;
-        smlouvaEntities = session.createCriteria(SmlouvaEntity.class).list();
-        Object[][] arr = new Object[smlouvaEntities.size()][];
-        for (int i = 0; i < smlouvaEntities.size(); i++) {
-            arr[i] = new Object[]{smlouvaEntities.get(i).getId(), smlouvaEntities.get(i).getDatumPocatku(), smlouvaEntities.get(i).getDatumVyprseni(), smlouvaEntities.get(i).getIdMistaOdberu(), smlouvaEntities.get(i).getIdProduktu(), smlouvaEntities.get(i).getIdZakaznika()};
-        }
+    public List<SmlouvaEntity> vypisSmlouvy(){
+        Session session = sessionFactory.openSession();
+        List<SmlouvaEntity> smlouvaEntities = session.createCriteria(SmlouvaEntity.class).list();
         session.close();
-        return arr;
+        return smlouvaEntities;
     }
     public Object[][] vypisZakazniky(){
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         List<ZakaznikEntity> zakaznikEntities;
         zakaznikEntities = session.createCriteria(ZakaznikEntity.class).list();
         Object[][] arr = new Object[zakaznikEntities.size()][];

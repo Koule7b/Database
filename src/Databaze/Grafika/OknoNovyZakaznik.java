@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class OknoNovyZakaznik extends JFrame {
     Engine engine;
     public OknoNovyZakaznik(Engine engine) {
-        setTitle("Nové měření");
+        setTitle("Nový zákazník");
         setDefaultCloseOperation(OknoNovaPlatba.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(300, 200));
         setResizable(true);

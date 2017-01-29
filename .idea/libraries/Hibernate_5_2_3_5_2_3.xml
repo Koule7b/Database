@@ -26,6 +26,7 @@
     <SOURCES>
       <root url="jar://$USER_HOME$/Downloads/SQLScout/lib/jgraphx-3.3.0.0.jar!/" />
       <root url="jar://$USER_HOME$/Downloads/SQLScout/lib/sqlite-jdbc-3.8.7.jar!/" />
+      <root url="jar://$USER_HOME$/.ideaLibSources/hibernate-jpa-2.1-api-1.0.0.Final-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

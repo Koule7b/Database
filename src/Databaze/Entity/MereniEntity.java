@@ -1,4 +1,4 @@
-package Databaze;
+package Databaze.Entity;
 
 import javax.persistence.*;
 
@@ -12,9 +12,11 @@ public class MereniEntity {
     private String datum;
     private int hodnota;
     private int mistoOdberu;
+    private OdberneMistoEntity odberneMistoByMistoOdberu;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -43,11 +45,6 @@ public class MereniEntity {
         this.hodnota = hodnota;
     }
 
-    @Basic
-    @Column(name = "mistoOdberu")
-    public int getMistoOdberu() {
-        return mistoOdberu;
-    }
 
     public void setMistoOdberu(int mistoOdberu) {
         this.mistoOdberu = mistoOdberu;
@@ -75,5 +72,15 @@ public class MereniEntity {
         result = 31 * result + hodnota;
         result = 31 * result + mistoOdberu;
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "mistoOdberu", referencedColumnName = "ean", nullable = false)
+    public OdberneMistoEntity getOdberneMistoByMistoOdberu() {
+        return odberneMistoByMistoOdberu;
+    }
+
+    public void setOdberneMistoByMistoOdberu(OdberneMistoEntity odberneMistoByMistoOdberu) {
+        this.odberneMistoByMistoOdberu = odberneMistoByMistoOdberu;
     }
 }

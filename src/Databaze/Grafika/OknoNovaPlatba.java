@@ -1,6 +1,7 @@
 package Databaze.Grafika;
 
 import Databaze.Logika.Engine;
+import Databaze.Entity.SmlouvaEntity;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,8 +61,9 @@ class VnitrekNP extends JPanel implements ActionListener{
         dat = new JTextField();
         cas = new JTextField();
         idS = new JComboBox();
-        for (int i = 0; i < engine.vypisSmlouvy().length; i++) {
-            idS.addItem(engine.vypisSmlouvy()[i][0]);
+        java.util.List<SmlouvaEntity> smlouvaEntity = engine.vypisSmlouvy();
+        for (int i = 0; i < smlouvaEntity.size(); i++) {
+            idS.addItem(smlouvaEntity.get(i));
         }
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         popisky = new JPanel();
@@ -89,7 +91,6 @@ class VnitrekNP extends JPanel implements ActionListener{
         String zmacknuto = e.getActionCommand();
         switch (zmacknuto){
             case "uložit":
-                engine.vytvorPlatbu(Integer.parseInt(idP.getText()), dat.getText(),Integer.parseInt(cas.getText()), idS.getSelectedIndex() + 1);
                 oknoNovaPlatba.dispose();
                 break;
             case "zavřít":

@@ -1,6 +1,7 @@
-package Databaze;
+package Databaze.Entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by stepanmudra on 15.01.17.
@@ -14,9 +15,14 @@ public class SmlouvaEntity {
     private int idZakaznika;
     private Integer idProduktu;
     private Integer idMistaOdberu;
+    private Collection<PlatbaEntity> platbasById;
+    private ZakaznikEntity zakaznikByIdZakaznika;
+    private ProduktyEntity produktyByIdProduktu;
+    private OdberneMistoEntity odberneMistoByIdMistaOdberu;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -43,36 +49,6 @@ public class SmlouvaEntity {
 
     public void setDatumVyprseni(String datumVyprseni) {
         this.datumVyprseni = datumVyprseni;
-    }
-
-    @Basic
-    @Column(name = "idZakaznika")
-    public int getIdZakaznika() {
-        return idZakaznika;
-    }
-
-    public void setIdZakaznika(int idZakaznika) {
-        this.idZakaznika = idZakaznika;
-    }
-
-    @Basic
-    @Column(name = "idProduktu")
-    public Integer getIdProduktu() {
-        return idProduktu;
-    }
-
-    public void setIdProduktu(Integer idProduktu) {
-        this.idProduktu = idProduktu;
-    }
-
-    @Basic
-    @Column(name = "idMistaOdberu")
-    public Integer getIdMistaOdberu() {
-        return idMistaOdberu;
-    }
-
-    public void setIdMistaOdberu(Integer idMistaOdberu) {
-        this.idMistaOdberu = idMistaOdberu;
     }
 
     @Override
@@ -103,5 +79,45 @@ public class SmlouvaEntity {
         result = 31 * result + (idProduktu != null ? idProduktu.hashCode() : 0);
         result = 31 * result + (idMistaOdberu != null ? idMistaOdberu.hashCode() : 0);
         return result;
+    }
+
+
+    @OneToMany(mappedBy = "smlouvaByIdSmlovy")
+    public Collection<PlatbaEntity> getPlatbasById() {
+        return platbasById;
+    }
+
+    public void setPlatbasById(Collection<PlatbaEntity> platbasById) {
+        this.platbasById = platbasById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "idZakaznika", referencedColumnName = "id", nullable = false)
+    public ZakaznikEntity getZakaznikByIdZakaznika() {
+        return zakaznikByIdZakaznika;
+    }
+
+    public void setZakaznikByIdZakaznika(ZakaznikEntity zakaznikByIdZakaznika) {
+        this.zakaznikByIdZakaznika = zakaznikByIdZakaznika;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "idProduktu", referencedColumnName = "id")
+    public ProduktyEntity getProduktyByIdProduktu() {
+        return produktyByIdProduktu;
+    }
+
+    public void setProduktyByIdProduktu(ProduktyEntity produktyByIdProduktu) {
+        this.produktyByIdProduktu = produktyByIdProduktu;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "idMistaOdberu", referencedColumnName = "ean")
+    public OdberneMistoEntity getOdberneMistoByIdMistaOdberu() {
+        return odberneMistoByIdMistaOdberu;
+    }
+
+    public void setOdberneMistoByIdMistaOdberu(OdberneMistoEntity odberneMistoByIdMistaOdberu) {
+        this.odberneMistoByIdMistaOdberu = odberneMistoByIdMistaOdberu;
     }
 }

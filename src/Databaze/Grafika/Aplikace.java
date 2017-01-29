@@ -1,6 +1,6 @@
 package Databaze.Grafika;
 
-import Databaze.*;
+import Databaze.Entity.*;
 import Databaze.Logika.Engine;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.metadata.ClassMetadata;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -131,7 +132,7 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
                 this.remove(jScrollPane);
                 classMetadata = sessionFactory.getClassMetadata(MereniEntity.class);
                 String[] jmenaM = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2]};
-                jTable = new JTable(engine.vypisMereni(), jmenaM);
+                //jTable = new JTable(engine.vypisMereni(), jmenaM);
                 this.add(jScrollPane = new JScrollPane(jTable));
                 this.repaint();
                 okno.setVisible(true);
@@ -189,9 +190,26 @@ public class Aplikace extends JPanel implements ActionListener, ItemListener {
                 System.out.println(Arrays.toString(classMetadata.getPropertyNames()));
                 classMetadata.getIdentifierPropertyName();
                 String[] jmenaS = {classMetadata.getIdentifierPropertyName(), classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2], classMetadata.getPropertyNames()[3], classMetadata.getPropertyNames()[4]};
-                jTable = new JTable(engine.vypisSmlouvy(), jmenaS);
+                //jTable = new JTable(engine.vypisSmlouvy(), jmenaS);
+
+
+                jTable = new JTable();
+                DefaultTableModel smlouvyModel = new DefaultTableModel();
+                smlouvyModel.setColumnIdentifiers(classMetadata.getPropertyNames());
+                smlouvyModel.setColumnIdentifiers(jmenaS);
+                for (SmlouvaEntity smlouvaEntity : engine.vypisSmlouvy()) {
+                    smlouvyModel.addRow(new Object[]{
+                            smlouvaEntity.getId(),
+                            smlouvaEntity.getDatumPocatku(),
+                            smlouvaEntity.getDatumVyprseni(),
+                            smlouvaEntity.getZakaznikByIdZakaznika(),
+                            smlouvaEntity.getProduktyByIdProduktu(),
+                            smlouvaEntity.getOdberneMistoByIdMistaOdberu()
+                    });
+                }
+                jTable.setModel(smlouvyModel);
                 this.add(jScrollPane = new JScrollPane(jTable));
-                this.repaint();
+                //this.repaint();
                 okno.setVisible(true);
                 break;
             case zak:
