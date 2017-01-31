@@ -36,12 +36,22 @@ public class Produkt {
         session.update(produkt);
         session.close();
     }
+
+    public void smazProdukt(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.remove(session.load(ProduktyEntity.class, id));
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public ProduktyEntity najdiProdukt(int id){
         Session session = sessionFactory.openSession();
         ProduktyEntity produkt = session.get(ProduktyEntity.class, id);
         session.close();
         return produkt;
     }
+
     public List<ProduktyEntity> getSeznamProduktu(){
         Session session = sessionFactory.openSession();
         List<ProduktyEntity> seznamProduktu = session.createCriteria(ProduktyEntity.class).list();

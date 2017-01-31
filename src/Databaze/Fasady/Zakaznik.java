@@ -41,6 +41,14 @@ public class Zakaznik {
         session.close();
     }
 
+    public void smazZakaznika(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.remove(session.load(ZakaznikEntity.class, id));
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public ZakaznikEntity najdiZakaznika(int id){
         Session session = sessionFactory.openSession();
         ZakaznikEntity zakaznik = session.get(ZakaznikEntity.class, id);

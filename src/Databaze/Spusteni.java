@@ -10,5 +10,7 @@ public class Spusteni {
         //Okno okno = new Okno();
         //okno.otevriAplikaci();
         OknoAplikace oknoAplikace = new OknoAplikace();
+        //OknoA oknoA = new OknoA();
+        //oknoA.naplnOkno();
     }
 }

@@ -23,6 +23,7 @@ public class MistoOdberu {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(odberneMistoEntity);
+        session.getTransaction().commit();
         session.close();
     }
 
@@ -32,13 +33,15 @@ public class MistoOdberu {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(odberneMistoEntity);
+        session.getTransaction().commit();
         session.close();
     }
 
-    public void smazOdberneMisto(OdberneMistoEntity odberneMistoEntity){
+    public void smazOdberneMisto(int id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.remove(odberneMistoEntity);
+        session.remove(session.load(OdberneMistoEntity.class, id));
+        session.getTransaction().commit();
         session.close();
     }
 

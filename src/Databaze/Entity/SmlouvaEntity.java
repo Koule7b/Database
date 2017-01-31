@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by stepanmudra on 15.01.17.
+ * Created by stepanmudra on 31.01.17.
  */
 @Entity
 @Table(name = "Smlouva", schema = "", catalog = "")
@@ -12,17 +12,13 @@ public class SmlouvaEntity {
     private int id;
     private String datumPocatku;
     private String datumVyprseni;
-    private int idZakaznika;
-    private Integer idProduktu;
-    private Integer idMistaOdberu;
     private Collection<PlatbaEntity> platbasById;
     private ZakaznikEntity zakaznikByIdZakaznika;
     private ProduktyEntity produktyByIdProduktu;
     private OdberneMistoEntity odberneMistoByIdMistaOdberu;
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -32,7 +28,7 @@ public class SmlouvaEntity {
     }
 
     @Basic
-    @Column(name = "datumPocatku")
+    @Column(name = "datumPocatku", nullable = false, length = 0)
     public String getDatumPocatku() {
         return datumPocatku;
     }
@@ -42,7 +38,7 @@ public class SmlouvaEntity {
     }
 
     @Basic
-    @Column(name = "datumVyprseni")
+    @Column(name = "datumVyprseni", nullable = true, length = 0)
     public String getDatumVyprseni() {
         return datumVyprseni;
     }
@@ -59,12 +55,8 @@ public class SmlouvaEntity {
         SmlouvaEntity that = (SmlouvaEntity) o;
 
         if (id != that.id) return false;
-        if (idZakaznika != that.idZakaznika) return false;
         if (datumPocatku != null ? !datumPocatku.equals(that.datumPocatku) : that.datumPocatku != null) return false;
         if (datumVyprseni != null ? !datumVyprseni.equals(that.datumVyprseni) : that.datumVyprseni != null)
-            return false;
-        if (idProduktu != null ? !idProduktu.equals(that.idProduktu) : that.idProduktu != null) return false;
-        if (idMistaOdberu != null ? !idMistaOdberu.equals(that.idMistaOdberu) : that.idMistaOdberu != null)
             return false;
 
         return true;
@@ -75,12 +67,8 @@ public class SmlouvaEntity {
         int result = id;
         result = 31 * result + (datumPocatku != null ? datumPocatku.hashCode() : 0);
         result = 31 * result + (datumVyprseni != null ? datumVyprseni.hashCode() : 0);
-        result = 31 * result + idZakaznika;
-        result = 31 * result + (idProduktu != null ? idProduktu.hashCode() : 0);
-        result = 31 * result + (idMistaOdberu != null ? idMistaOdberu.hashCode() : 0);
         return result;
     }
-
 
     @OneToMany(mappedBy = "smlouvaByIdSmlovy")
     public Collection<PlatbaEntity> getPlatbasById() {

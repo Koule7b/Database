@@ -9,13 +9,10 @@ import org.hibernate.metadata.ClassMetadata;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.List;
 
 /**
  * Created by stepanmudra on 27.01.17.
@@ -33,6 +30,7 @@ public class OknoAplikace extends JFrame {
     private JTable table6;
     private JPanel puvodniPanel;
     private JButton novy;
+    private JTable tabulkaSmluv;
 
     public OknoAplikace() {
         super();
@@ -67,72 +65,6 @@ public class OknoAplikace extends JFrame {
         });
         pack();
         setVisible(true);
-        table1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int pocetMacknuti = e.getClickCount();
-                if (pocetMacknuti == 1) {//SwingUtilities.isRightMouseButton(e)){
-                    Mereni mereni = new Mereni(sessionFactory);
-                    //System.out.println(table1.getSelectedRow());
-                    OknoMereni oknoMereni = new OknoMereni(mereni.najdiMereni(table1.getSelectedRow() + 1), sessionFactory);
-                }
-            }
-        });
-        table2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int pocetMacknuti = e.getClickCount();
-                if (pocetMacknuti == 1) {//SwingUtilities.isRightMouseButton(e)){
-                    MistoOdberu mistoOdberu = new MistoOdberu(sessionFactory);
-                    //System.out.println(table1.getSelectedRow());
-                    OknoOdbernehoMista oknoOdbernehoMista = new OknoOdbernehoMista(mistoOdberu.najdiMistoOdberu(table1.getSelectedRow() + 1), sessionFactory);
-                }
-            }
-        });
-        table3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int pocetMacknuti = e.getClickCount();
-                if (pocetMacknuti == 1) {//SwingUtilities.isRightMouseButton(e)){
-                    Mereni mereni = new Mereni(sessionFactory);
-                    //System.out.println(table1.getSelectedRow());
-                    OknoMereni oknoMereni = new OknoMereni(mereni.najdiMereni(table1.getSelectedRow() + 1), sessionFactory);
-                }
-            }
-        });
-        table4.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int pocetMacknuti = e.getClickCount();
-                if (pocetMacknuti == 1) {//SwingUtilities.isRightMouseButton(e)){
-                    Mereni mereni = new Mereni(sessionFactory);
-                    //System.out.println(table1.getSelectedRow());
-                    OknoMereni oknoMereni = new OknoMereni(mereni.najdiMereni(table1.getSelectedRow() + 1), sessionFactory);
-                }
-            }
-        });
-        table5.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int pocetMacknuti = e.getClickCount();
-                if (pocetMacknuti == 1) {//SwingUtilities.isRightMouseButton(e)){
-                    Mereni mereni = new Mereni(sessionFactory);
-                    //System.out.println(table1.getSelectedRow());
-                    OknoMereni oknoMereni = new OknoMereni(mereni.najdiMereni(table1.getSelectedRow() + 1), sessionFactory);
-                }
-            }
-        });
-        table6.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int pocetMacknuti = e.getClickCount();
-                if (pocetMacknuti == 1) {//SwingUtilities.isRightMouseButton(e)){
-                    Mereni mereni = new Mereni(sessionFactory);
-                    //System.out.println(table1.getSelectedRow());
-                    OknoMereni oknoMereni = new OknoMereni(mereni.najdiMereni(table1.getSelectedRow() + 1), sessionFactory);
-                }
-            }
-        });
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,27 +72,118 @@ public class OknoAplikace extends JFrame {
                 System.out.println(prikaz);
                 switch (prikaz) {
                     case "Změnit":
+                        switch (tabbedPane1.getSelectedIndex()) {
+                            case 0:
+                                Mereni mereni = new Mereni(sessionFactory);
+                                OknoMereni oknoMereni = new OknoMereni((table1.getSelectedRow() + 1), sessionFactory);
+                                vypisMereni(sessionFactory);
+                                break;
+                            case 1:
+                                MistoOdberu mistoOdberu = new MistoOdberu(sessionFactory);
+                                mistoOdberu.smazOdberneMisto(table2.getSelectedRow() + 1);
+                                vypisOdbernaMista(sessionFactory);
+                                break;
+                            case 2:
+                                Platba platba = new Platba(sessionFactory);
+                                platba.smazPlatbu(table3.getSelectedRow() + 1);
+                                vypisPlatby(sessionFactory);
+                                break;
+                            case 3:
+                                Produkt produkt = new Produkt(sessionFactory);
+                                produkt.smazProdukt(table4.getSelectedRow() + 1);
+                                vypisProdukty(sessionFactory);
+                                break;
+                            case 4:
+                                Smlouva smlouva = new Smlouva(sessionFactory);
+                                smlouva.smazSmlouvu(table5.getSelectedRow() + 1);
+                                vypisSmlouvy(sessionFactory);
+                                break;
+                            case 5:
+                                Zakaznik zakaznik = new Zakaznik(sessionFactory);
+                                zakaznik.smazZakaznika(table6.getSelectedRow() + 1);
+                                vypisZakazniky(sessionFactory);
+                                break;
+                        }
                         break;
                     case "Nový":
                         switch (tabbedPane1.getSelectedIndex()) {
                             case 0:
                                 OknoMereni oknoMereni = new OknoMereni(sessionFactory);
                                 break;
+                            case 1:
+                                OknoOdbernehoMista oknoOdbernehoMista = new OknoOdbernehoMista(sessionFactory);
+                                break;
+                            case 2:
+                                OknoPlatby oknoPlatby = new OknoPlatby(sessionFactory);
+                                break;
+                            case 3:
+                                OknoProduktu oknoProduktu = new OknoProduktu(sessionFactory);
+                                break;
+                            case 4:
+                                OknoSmlouvy oknoSmlouvy = new OknoSmlouvy(sessionFactory);
+                                break;
+                            case 5:
+                                OknoZakaznika oknoZakaznika = new OknoZakaznika(sessionFactory);
+                                break;
                         }
                         break;
                     case "Smazat":
+                        switch (tabbedPane1.getSelectedIndex()) {
+                            case 0:
+                                Mereni mereni = new Mereni(sessionFactory);
+                                mereni.smazMereni(table1.getSelectedRow() + 1);
+                                vypisMereni(sessionFactory);
+                                break;
+                            case 1:
+                                MistoOdberu mistoOdberu = new MistoOdberu(sessionFactory);
+                                Smlouva smlouva1 = new Smlouva(sessionFactory);
+                                List<SmlouvaEntity> seznamSmluv = smlouva1.getSeznamSmluv();
+                                int index = table2.getSelectedRow() + 1;
+                                for (SmlouvaEntity smlouvaEntity : seznamSmluv) {
+                                    if(smlouvaEntity.getOdberneMistoByIdMistaOdberu().getEan() == index){
+                                        NelzeSmazat nelzeSmazat = new NelzeSmazat();
+                                        nelzeSmazat.main();
+                                        return;
+                                    }
+                                }
+                                mistoOdberu.smazOdberneMisto(index);
+                                vypisOdbernaMista(sessionFactory);
+                                break;
+                            case 2:
+                                Platba platba = new Platba(sessionFactory);
+                                platba.smazPlatbu(table3.getSelectedRow() + 1);
+                                vypisPlatby(sessionFactory);
+                                break;
+                            case 3:
+                                Produkt produkt = new Produkt(sessionFactory);
+                                produkt.smazProdukt(table4.getSelectedRow() + 1);
+                                vypisProdukty(sessionFactory);
+                                break;
+                            case 4:
+                                Smlouva smlouva = new Smlouva(sessionFactory);
+                                smlouva.smazSmlouvu(table5.getSelectedRow() + 1);
+                                vypisSmlouvy(sessionFactory);
+                                break;
+                            case 5:
+                                Zakaznik zakaznik = new Zakaznik(sessionFactory);
+                                zakaznik.smazZakaznika(table6.getSelectedRow() + 1);
+                                vypisZakazniky(sessionFactory);
+                                break;
+                        }
                         break;
                 }
+
             }
         };
         novy.addActionListener(actionListener);
         změnitButton.addActionListener(actionListener);
+        smazatButton.addActionListener(actionListener);
     }
 
     private void vypisZakazniky(SessionFactory sessionFactory) {
         Zakaznik zakaznik = new Zakaznik(sessionFactory);
         ClassMetadata classMetadata = sessionFactory.getClassMetadata(ZakaznikEntity.class);
-        String[] nazvySloupcu = {"Rodné číslo", classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2]};
+        String[] nazvySloupcu = {"jméno", "příjmení", "adresa"};
         for (int i = 0; i < nazvySloupcu.length; i++) {
             System.out.println(nazvySloupcu[i]);
         }
@@ -171,7 +194,6 @@ public class OknoAplikace extends JFrame {
 
         for (ZakaznikEntity zakaznikEntity : zakaznik.getSeznamZakazniku()) {
             zakaznikModel.addRow(new Object[]{
-                    zakaznikEntity.getId(),
                     zakaznikEntity.getJmeno(),
                     zakaznikEntity.getPrijmeni(),
                     zakaznikEntity.getAdresa()
@@ -182,10 +204,7 @@ public class OknoAplikace extends JFrame {
     private void vypisProdukty(SessionFactory sessionFactory) {
         Produkt produkt = new Produkt(sessionFactory);
         ClassMetadata classMetadata = sessionFactory.getClassMetadata(ProduktyEntity.class);
-        String[] nazvySloupcu = new String[classMetadata.getPropertyNames().length];
-        for (int i = 0; i < nazvySloupcu.length; i++) {
-            nazvySloupcu[i] = classMetadata.getPropertyNames()[i];
-        }
+        String[] nazvySloupcu = {"cena", "popis"};
 
         DefaultTableModel produktyModel = new DefaultTableModel();
         produktyModel.setColumnIdentifiers(nazvySloupcu);
@@ -201,11 +220,7 @@ public class OknoAplikace extends JFrame {
 
     private void vypisPlatby(SessionFactory sessionFactory) {
         Platba platba = new Platba(sessionFactory);
-        ClassMetadata classMetadata = sessionFactory.getClassMetadata(PlatbaEntity.class);
-        String[] nazvySloupcu = new String[classMetadata.getPropertyNames().length];
-        for (int i = 0; i < nazvySloupcu.length; i++) {
-            nazvySloupcu[i] = classMetadata.getPropertyNames()[i];
-        }
+        String[] nazvySloupcu = {"datum", "částka", "id smlouvy"};
 
         DefaultTableModel platbyModel = new DefaultTableModel();
         platbyModel.setColumnIdentifiers(nazvySloupcu);
@@ -222,8 +237,7 @@ public class OknoAplikace extends JFrame {
 
     private void vypisOdbernaMista(SessionFactory sessionFactory) {
         MistoOdberu misto = new MistoOdberu(sessionFactory);
-        ClassMetadata classMetadata = sessionFactory.getClassMetadata(OdberneMistoEntity.class);
-        String[] nazvySloupcu = {classMetadata.getPropertyNames()[0]};
+        String[] nazvySloupcu = {"adresa"};
 
         DefaultTableModel mistoModel = new DefaultTableModel();
         mistoModel.setColumnIdentifiers(nazvySloupcu);
@@ -238,8 +252,7 @@ public class OknoAplikace extends JFrame {
 
     private void vypisMereni(SessionFactory sessionFactory){
         Mereni mereni = new Mereni(sessionFactory);
-        ClassMetadata classMetadata = sessionFactory.getClassMetadata(MereniEntity.class);
-        String[] nazvySloupcu = {classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], "Místo odběru"};
+        String[] nazvySloupcu = {"datum", "hodnota", "Místo odběru"};
 
         DefaultTableModel mereniModel = new DefaultTableModel();
         mereniModel.setColumnIdentifiers(nazvySloupcu);
@@ -256,10 +269,9 @@ public class OknoAplikace extends JFrame {
     }
 
     private void vypisSmlouvy(SessionFactory sessionFactory){
-        ClassMetadata classMetadata;
         Smlouva smlouva = new Smlouva(sessionFactory);
-        classMetadata = sessionFactory.getClassMetadata(SmlouvaEntity.class);
-        String[] nazvySloupcu = {classMetadata.getPropertyNames()[0], classMetadata.getPropertyNames()[1], classMetadata.getPropertyNames()[2], classMetadata.getPropertyNames()[3], classMetadata.getPropertyNames()[4]};
+
+        String[] nazvySloupcu = {"datum uzavření smlouvy", "datum vypršení smlouvy", "zákazník", "produkt", "místo odběru"};
 
         DefaultTableModel smlouvyModel = new DefaultTableModel();
         smlouvyModel.setColumnIdentifiers(nazvySloupcu);
@@ -268,7 +280,7 @@ public class OknoAplikace extends JFrame {
             smlouvyModel.addRow(new Object[]{
                     smlouvaEntity.getDatumPocatku(),
                     smlouvaEntity.getDatumVyprseni(),
-                    smlouvaEntity.getZakaznikByIdZakaznika().getPrijmeni(),
+                    smlouvaEntity.getZakaznikByIdZakaznika().getId(),
                     smlouvaEntity.getProduktyByIdProduktu().getPopis(),
                     smlouvaEntity.getOdberneMistoByIdMistaOdberu().getAdresa()
             });

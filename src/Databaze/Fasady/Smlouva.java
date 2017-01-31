@@ -53,7 +53,11 @@ public class Smlouva {
         session.close();
         return smlouva;
     }
-    public void smazSmlouvu(SmlouvaEntity smlouva){
-
+    public void smazSmlouvu(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.remove(session.load(SmlouvaEntity.class, id));
+        session.getTransaction().commit();
+        session.close();
     }
 }

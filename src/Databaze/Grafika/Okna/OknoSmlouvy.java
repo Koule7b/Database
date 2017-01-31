@@ -1,5 +1,7 @@
 package Databaze.Grafika.Okna;
 
+import org.hibernate.SessionFactory;
+
 import javax.swing.*;
 
 /**
@@ -13,4 +15,7 @@ public class OknoSmlouvy {
     private JComboBox comboBox2;
     private JComboBox comboBox3;
     private JButton zrušitButton;
+
+    public OknoSmlouvy(SessionFactory sessionFactory) {
+    }
 }

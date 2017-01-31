@@ -14,7 +14,9 @@
             <preferred-size width="500" height="500"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <enabled value="true"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="289c" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -24,27 +26,20 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="d5bd1" class="javax.swing.JTable" binding="table1" default-binding="true">
+              <scrollpane id="136dd">
                 <constraints border-constraint="Center"/>
-                <properties>
-                  <autoCreateColumnsFromModel value="true"/>
-                  <autoCreateRowSorter value="true"/>
-                  <autoResizeMode value="2"/>
-                  <cellSelectionEnabled value="false"/>
-                  <columnSelectionAllowed value="false"/>
-                  <editingColumn value="-1"/>
-                  <editingRow value="-1"/>
-                  <enabled value="true"/>
-                  <inheritsPopupMenu value="true"/>
-                  <rowSelectionAllowed value="true"/>
-                  <surrendersFocusOnKeystroke value="true"/>
-                  <updateSelectionOnSort value="false"/>
-                  <visible value="true"/>
-                </properties>
-                <clientProperties>
-                  <JTable.autoStartsEdit class="java.lang.Boolean" value="false"/>
-                </clientProperties>
-              </component>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="4ee24" class="javax.swing.JTable" binding="table1" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                      <autoResizeMode value="4"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="d3f64" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -55,14 +50,19 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="6544a" class="javax.swing.JTable" binding="table2" default-binding="true">
+              <scrollpane id="8e714">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
-              </component>
+                <border type="none"/>
+                <children>
+                  <component id="7e132" class="javax.swing.JTable" binding="table2" default-binding="true">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="7bfb9" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -73,14 +73,22 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="51540" class="javax.swing.JTable" binding="table3" default-binding="true">
+              <scrollpane id="1394c">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
-              </component>
+                <border type="none"/>
+                <children>
+                  <component id="1baed" class="javax.swing.JTable" binding="table3" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                      <columnSelectionAllowed value="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="aef30" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -91,14 +99,22 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="1ca7f" class="javax.swing.JTable" binding="table4" default-binding="true">
+              <scrollpane id="dc55a">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
-              </component>
+                <border type="none"/>
+                <children>
+                  <component id="eefe2" class="javax.swing.JTable" binding="table4" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <focusable value="true"/>
+                      <updateSelectionOnSort value="false"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="bdee4" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -109,22 +125,19 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="b67a0" class="javax.swing.JTable" binding="table5" default-binding="true">
+              <scrollpane id="9ed1c">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <autoCreateColumnsFromModel value="true"/>
-                  <autoCreateRowSorter value="true"/>
-                  <focusable value="true"/>
-                  <rowSelectionAllowed value="true"/>
-                  <updateSelectionOnSort value="false"/>
-                  <verifyInputWhenFocusTarget value="false"/>
-                  <visible value="true"/>
-                </properties>
-              </component>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="2c86" class="javax.swing.JTable" binding="table5" default-binding="true">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="dcd50" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -135,14 +148,19 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="eb90f" class="javax.swing.JTable" binding="table6" default-binding="true">
+              <scrollpane id="a337e">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
-              </component>
+                <border type="none"/>
+                <children>
+                  <component id="c1f39" class="javax.swing.JTable" binding="table6" default-binding="true">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
         </children>

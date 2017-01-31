@@ -1,5 +1,7 @@
 package Databaze.Grafika.Okna;
 
+import org.hibernate.SessionFactory;
+
 import javax.swing.*;
 
 /**
@@ -12,4 +14,9 @@ public class OknoZakaznika {
     private JTextField textField1;
     private JTextField textField2;
     private JFormattedTextField formattedTextField2;
+    private SessionFactory sessionFactory;
+
+    public OknoZakaznika(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

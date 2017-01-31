@@ -26,6 +26,7 @@ public class Platba {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(platba);
+        session.getTransaction().commit();
         session.close();
     }
 
@@ -37,6 +38,7 @@ public class Platba {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(platba);
+        session.getTransaction().commit();
         session.close();
     }
 
@@ -52,5 +54,13 @@ public class Platba {
         PlatbaEntity platba = session.get(PlatbaEntity.class, id);
         session.close();
         return platba;
+    }
+
+    public void smazPlatbu(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.remove(session.load(PlatbaEntity.class, id));
+        session.getTransaction().commit();
+        session.close();
     }
 }

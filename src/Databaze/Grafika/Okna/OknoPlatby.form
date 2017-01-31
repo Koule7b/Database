@@ -15,7 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Datum:"/>
+          <text value="Datum (dd/mm/yyyy):"/>
         </properties>
       </component>
       <component id="69b84" class="javax.swing.JLabel">

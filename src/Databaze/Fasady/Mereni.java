@@ -27,6 +27,7 @@ public class Mereni {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(mereni);
+        session.getTransaction().commit();
         session.close();
     }
 
@@ -37,14 +38,15 @@ public class Mereni {
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.save(mereniEntity);
+        session.update(mereniEntity);
+        session.getTransaction().commit();
         session.close();
     }
 
     public MereniEntity najdiMereni(int id){
         Session session = sessionFactory.openSession();
-        MereniEntity mereni = session.get(MereniEntity.class, id);
-        session.close();
+        MereniEntity mereni = session.load(MereniEntity.class, id);
+        //session.close();
         return mereni;
     }
 
@@ -55,10 +57,11 @@ public class Mereni {
         return seznamMereni;
     }
 
-    public void smazMereni(MereniEntity mereniEntity){
+    public void smazMereni(int id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.remove(mereniEntity);
+        session.delete(session.load(MereniEntity.class, id));
+        session.getTransaction().commit();
         session.close();
     }
 }
